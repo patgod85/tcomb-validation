@@ -116,8 +116,10 @@ validators.subtype = function validateSubtype(x, type, path, context) {
     return ret;
   }
 
+  var options = context && context.options && context.options.fields ? context.options.fields[path[1]] : {};
+
   // x should satisfy the predicate
-  if (!type.meta.predicate(ret.value)) {
+  if (!type.meta.predicate(ret.value, options)) {
     ret.errors = [ValidationError.of(x, type, path, context)];
   }
 
